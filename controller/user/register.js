@@ -1,6 +1,7 @@
 require('dotenv').config()
-const jwt=require("jsonwebtoken")
-const {userModel}=require("../../models/User.js")
+const {userModel}=require("../../models/User.js");
+const { generateToken } = require('../jwt-token.js');
+const sendEmailWithLink = require('../send-email.js');
 const register=async(req,res)=>{
     try{
      const {name,email,password}=req.body;
@@ -19,16 +20,15 @@ const register=async(req,res)=>{
             password:password
         })
 
-        const token=jwt.sign({id:user._id},process.env.NODE_JWT_SECRET_KEY,{expiresIn:"60s"});
+        const token=generateToken(user._id,"24h");
+        sendEmailWithLink(email,"Verify your email",`${process.env.NODE_EMAIL_ROUTE_VERIFY}/${token}`);
+        
+
         // code 201 used for created in item 
         res.status(201).json({
-            msg:"hello ! this is register page",
+            msg:"Check your email to verifcation",
+            email:email,
             success:true,
-            token,
-            data:{
-                name:name,
-                email:email
-            }
         })
     }else{
         // code 400 means bad request 
@@ -49,4 +49,4 @@ const register=async(req,res)=>{
 }
 
 
-module.exports=register
+module.exports={register}

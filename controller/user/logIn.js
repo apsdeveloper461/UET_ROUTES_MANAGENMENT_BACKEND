@@ -1,5 +1,6 @@
 const {userModel}=require("../../models/User.js")
-const jwt=require("jsonwebtoken")
+const { generateToken } = require("../jwt-token.js");
+const sendEmailWithLink = require("../send-email.js");
 
 const logIn=async(req,res)=>{
     try {
@@ -12,19 +13,29 @@ const logIn=async(req,res)=>{
                     success:false
                 })
             }
+            // check verifcation is satisfies
+            const isVerified=user_data.isVerified;
+            if(!isVerified){       
+                    const Token=generateToken(user_data._id,"24h");
+                    sendEmailWithLink(user_data.email,"Verify your email",`${process.env.NODE_EMAIL_ROUTE_VERIFY}/${Token}`);
+                    return res.status(400).json({
+                        msg:"user not verified, Go to Email for verifcation",
+                        email:user_data.email,
+                        success:false
+                    })
+            }
             //if exist in database then check password
-
             const isPasswordMatch=await user_data.matchPassword(password);
-             console.log(isPasswordMatch);
+            //  console.log(isPasswordMatch);
                 
             if(!isPasswordMatch){
                 return res.status(400).json({
-                    msg:"Credential not match",
+                    msg:"Credentials not correct",
                     success:false
                 })
             }
             //if every thing is right
-            const token=jwt.sign({id:user_data._id},process.env.NODE_JWT_SECRET_KEY,{expiresIn:"60s"}); 
+            const token=generateToken(user_data._id,"7d");
 
 
 
@@ -33,7 +44,9 @@ const logIn=async(req,res)=>{
                 success:true,
                 token,
                 data:{
-                    email:email
+                    id:user_data._id,
+                    username:user_data.username,
+                    email:user_data.email
                 }
             })
         }else{
@@ -54,4 +67,4 @@ const logIn=async(req,res)=>{
 }
 
 
-module.exports=logIn
+module.exports={logIn}
