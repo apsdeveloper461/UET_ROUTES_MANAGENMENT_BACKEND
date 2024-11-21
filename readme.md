@@ -31,6 +31,18 @@ This is the backend of my project, in this project have routes:
         In request.body contains { token }
         This will response you object as {token:"" , data:{username, id, email} }
 
+### api/user/forget-password
+
+        POST request
+        In request.body contains { email }
+        send an email when you click on this , then open a page , enter you new password for changing
+
+### api/user/forget-password/verify/:token
+
+        POST request
+        In request.body contains { password } 
+        This will response you success if password is change and you navigate to login page for login
+
     
 
 
