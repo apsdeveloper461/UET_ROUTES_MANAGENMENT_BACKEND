@@ -16,7 +16,7 @@ const forgetPassword = async (req, res) => {
             throw new Error("User not found");
         }
         const token = generateToken(user._id, "1h");
-        sendEmailWithLink(user.email,"Forget Password of UET Routes Management System", token);
+        sendEmailWithLink(user.email,"Forget Password of UET Routes Management System", `${process.env.NODE_FRONTEND_URL}/user/auth/forget-password${token}`);
         res.status(200).json({
             msg: "Verification Code sent to your email",
             success: true

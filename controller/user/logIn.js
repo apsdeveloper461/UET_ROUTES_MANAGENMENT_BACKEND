@@ -17,9 +17,9 @@ const logIn=async(req,res)=>{
             const isVerified=user_data.isVerified;
             if(!isVerified){       
                     const Token=generateToken(user_data._id,"24h");
-                    sendEmailWithLink(user_data.email,"Verify your email",`${process.env.NODE_EMAIL_ROUTE_VERIFY}/${Token}`);
+                    sendEmailWithLink(email,"Verify your email to continue",`${process.env.NODE_FRONTEND_URL}/user/auth/verify${token}`);
                     return res.status(400).json({
-                        msg:"user not verified, Go to Email for verifcation",
+                        msg:"User not verified, Go to Email for verifcation",
                         email:user_data.email,
                         success:false
                     })

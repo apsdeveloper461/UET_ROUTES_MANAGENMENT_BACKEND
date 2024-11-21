@@ -1,3 +1,4 @@
+require('dotenv').config(); 
 const nodemailer = require('nodemailer');
 
 /**
@@ -13,14 +14,14 @@ async function sendEmailWithLink(recipient, subject, link) {
     const transporter = nodemailer.createTransport({
       service: 'gmail', // Use your email provider
       auth: {
-        user: 'mehboobalam786461@gmail.com', // Your email
-        pass: 'pffl sbgi uyvj loyw', // App password
+        user: process.env.NODE_EMAIL_ADDRESS, // Your email
+        pass:  process.env.NODE_EMAIL_PASSWORD, // App password
       },
     });
 
     // Define the email options
     const mailOptions = {
-      from: '"UET Routes Management System" <mehboobalam786461@gmail.com>', // Sender
+      from: `"UET Routes Management System" ${process.env.NODE_EMAIL_ADDRESS}`, // Sender
       to: recipient, // Receiver
       subject: subject, // Subject
       html: `
@@ -40,6 +41,7 @@ async function sendEmailWithLink(recipient, subject, link) {
     // console.log(`Email sent: ${info.response}`);
   } catch (error) {
     console.error('Error sending email:', error);
+    throw new Error('Error sending email');
   }
 }
 
