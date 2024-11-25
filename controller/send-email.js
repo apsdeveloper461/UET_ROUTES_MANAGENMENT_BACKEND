@@ -11,6 +11,8 @@ const nodemailer = require('nodemailer');
 async function sendEmailWithLink(recipient, subject, link) {
   try {
     // Create a transporter
+    console.log(process.env.NODE_EMAIL_ADDRESS, process.env.NODE_EMAIL_PASSWORD, recipient, subject, link);
+    
     const transporter = nodemailer.createTransport({
       service: 'gmail', // Use your email provider
       auth: {
