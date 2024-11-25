@@ -21,7 +21,7 @@ const register=async(req,res)=>{
         })
 
         const token=generateToken(user._id,"24h");
-        sendEmailWithLink(email,"Verify your email",`${process.env.NODE_FRONTEND_URL}/user/auth/verify${token}`);
+        sendEmailWithLink(email,"Verify your email",`${process.env.NODE_FRONTEND_URL}/user/auth/verify/${token}`);
         
 
         // code 201 used for created in item 

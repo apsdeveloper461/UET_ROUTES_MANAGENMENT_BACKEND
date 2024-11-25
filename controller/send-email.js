@@ -38,7 +38,7 @@ async function sendEmailWithLink(recipient, subject, link) {
 
     // Send the email
     const info = await transporter.sendMail(mailOptions);
-    // console.log(`Email sent: ${info.response}`);
+    console.log(`Email sent: ${info.response}`);
   } catch (error) {
     console.error('Error sending email:', error);
     throw new Error('Error sending email');
