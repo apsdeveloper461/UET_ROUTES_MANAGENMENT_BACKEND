@@ -10,9 +10,7 @@ const nodemailer = require('nodemailer');
  */
 async function sendEmailWithLink(recipient, subject, link) {
   try {
-    // Create a transporter
-    console.log(process.env.NODE_EMAIL_ADDRESS, process.env.NODE_EMAIL_PASSWORD, recipient, subject, link);
-    
+    // Create a transporter    
     const transporter = nodemailer.createTransport({
       service: 'gmail', // Use your email provider
       auth: {
@@ -31,8 +29,9 @@ async function sendEmailWithLink(recipient, subject, link) {
           <h2>Hello!</h2>
           <p>Click the link below to complete your verification:</p>
           <a href="${link}" style="color: #007BFF; text-decoration: none;">
-            ${link}
+            Click here for verifcation
           </a>
+          <p>Credit goes to Mehboob Alam (2023-SE-07) and Muhammad Abdullah Feroz (2023-SE-03).</p>
           <p>If you didn’t request this, please ignore this email.</p>
         </div>
       `, // Email content with embedded link
