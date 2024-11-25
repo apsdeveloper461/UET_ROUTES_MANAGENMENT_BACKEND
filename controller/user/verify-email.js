@@ -1,7 +1,7 @@
 
 
 
-const {userModel}=require("../../models/User.js");
+const {UserModel}=require("../../models/User.js");
 const { verifyToken, decodeToken, generateToken } = require("../jwt-token.js");
 
 
@@ -28,7 +28,7 @@ const verifyEmail=async(req,res)=>{
         }else{
             const {id}=decodeToken(token);
             // console.log(id);
-            const user = await userModel.findByIdAndUpdate(
+            const user = await UserModel.findByIdAndUpdate(
                 id,
                 { isVerified: true },
                 { new: true } // Return the updated user document

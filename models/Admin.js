@@ -1,16 +1,15 @@
 const mongoose=require('mongoose');
 const bcrypt=require('bcrypt');
 const selectedDb = mongoose.connection.useDb('UET_SYSTEM');
-const UserSchema=new mongoose.Schema({
+const AdminSchema=new mongoose.Schema({
     username:{type:String,required:true},
     email:{type:String,required:true,unique:true},
-    password:{type:String,required:true},
-    isVerified:{type:Boolean,default:false},
+    password:{type:String,required:true}
 })
 
 
 //pre condition on save the data
-UserSchema.pre('save',async function(next){
+AdminSchema.pre('save',async function(next){
     // console.log("pre save");
     // if password is not modify , then got to next 
     if(!this.isModified("password")){
@@ -24,7 +23,7 @@ UserSchema.pre('save',async function(next){
 })
 
 
-UserSchema.methods.matchPassword=async function(enteredPassword){
+AdminSchema.methods.matchPassword=async function(enteredPassword){
     // console.log(this.password);
     
     if(!enteredPassword){
@@ -34,6 +33,6 @@ UserSchema.methods.matchPassword=async function(enteredPassword){
         return await bcrypt.compare(enteredPassword,this.password);
 }
 
-const UserModel=selectedDb.model('uet_users',UserSchema);
+const AdminModel=selectedDb.model('uet_admins',AdminSchema);
 
-module.exports={UserModel};
+module.exports={AdminModel};

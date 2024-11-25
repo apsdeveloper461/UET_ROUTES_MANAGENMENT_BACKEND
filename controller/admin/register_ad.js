@@ -1,32 +1,25 @@
-require('dotenv').config()
-const {UserModel}=require("../../models/User.js");
-const { generateToken } = require('../jwt-token.js');
-const sendEmailWithLink = require('../send-email.js');
-const register=async(req,res)=>{
+const {AdminModel}=require("../../models/Admin.js");
+const register_ad=async(req,res)=>{
     try{
      const {name,email,password}=req.body;
     //  console.log(name,email,password);
     if(email&&password&&name){
-        const IsUserExist=await UserModel.findOne({email:email});
+        const IsUserExist=await AdminModel.findOne({email:email});
         if(IsUserExist){
             return res.status(400).json({
                 msg:"user already exist",
                 success:false
             })
         }
-        const user=await UserModel.create({
+        const user=await AdminModel.create({
             username:name,
             email:email,
             password:password
         })
 
-        const token=generateToken(user._id,"24h");
-        await sendEmailWithLink(email,"Verify your email",`${process.env.NODE_FRONTEND_URL}/user/auth/verify/${token}`);
-        
-
         // code 201 used for created in item 
         res.status(201).json({
-            msg:"Check your email to verifcation",
+            msg:"Go to Login page ",
             email:email,
             success:true,
         })
@@ -49,4 +42,4 @@ const register=async(req,res)=>{
 }
 
 
-module.exports={register}
+module.exports={register_ad}

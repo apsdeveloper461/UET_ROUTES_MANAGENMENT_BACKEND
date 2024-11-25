@@ -6,9 +6,11 @@ const app = express();
 const DBConnection = require("./controller/Database/DBconnection");
 
 const { router } = require("./api/user_api");
+const { router_ad } = require("./api/admin_api");
 
 app.use(express.json());
 app.use("/api/user", router);
+app.use('/api/admin',router_ad);
 
 // Define routes
 app.get("/", (req, res) => {

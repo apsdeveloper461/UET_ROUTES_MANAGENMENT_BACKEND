@@ -1,8 +1,8 @@
-const { UserModel } = require("../../models/User");
+const { AdminModel } = require("../../models/Admin");
 const { decodeToken, verifyToken } = require("../jwt-token");
 
 
-const getDataOfUser=async(req,res)=>{
+const getDataOfAdmin=async(req,res)=>{
     try {
         const {token}=req.body;
         if(!token){
@@ -20,14 +20,13 @@ const getDataOfUser=async(req,res)=>{
             })
         }else{
             const {id}=decodeToken(token);
-            const user_data=await UserModel.findById(id);
-
+            const admin_data=await AdminModel.findById(id);
             return res.status(200).json({
                 msg:"data fetched successfully",
                 data:{
-                    id:user_data._id,
-                    username:user_data.username,
-                    email:user_data.email
+                    id:admin_data._id,
+                    username:admin_data.username,
+                    email:admin_data.email
                 },
                 success:true
             })
@@ -42,4 +41,4 @@ const getDataOfUser=async(req,res)=>{
 
 
 
-module.exports={getDataOfUser}
+module.exports={getDataOfAdmin}

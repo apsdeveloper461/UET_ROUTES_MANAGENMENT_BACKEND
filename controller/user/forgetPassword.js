@@ -1,5 +1,5 @@
 const { generateToken, decodeToken } = require("../jwt-token");
-const { userModel } = require("../../models/User");
+const { UserModel } = require("../../models/User");
 const sendEmailWithLink = require("../send-email");
 
 
@@ -11,7 +11,7 @@ const forgetPassword = async (req, res) => {
            throw new Error("Email not found");
         }
 
-        const user = await userModel.findOne({ email: email });
+        const user = await UserModel.findOne({ email: email });
         if(!user){
             throw new Error("User not found");
         }
@@ -53,7 +53,7 @@ const VerifyForgetPassword=async(req,res)=>{
             throw new Error("Invalid token");
         }
     
-       const User= await userModel.findById(id);
+       const User= await UserModel.findById(id);
        if(!User){
            throw new Error("User not found");   
        }
