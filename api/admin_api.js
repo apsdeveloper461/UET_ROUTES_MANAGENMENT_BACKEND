@@ -6,6 +6,8 @@ const { register_ad } = require("../controller/admin/register_ad");
 const { add_stop, update_stop, get_all_stops } = require("../controller/admin/stops_handler");
 const { add_driver, update_driver, get_all_drivers } = require("../controller/admin/driver_handler");
 const { add_route, get_routes, add_stop_to_route, remove_stop_from_route, update_route } = require("../controller/admin/routes_handler");
+const { Change_Complaint_Status, getAllComplaints, deleteComplaint } = require("../controller/admin/complaint_handler");
+const { router } = require("./user_api");
 const router_ad=express.Router();
 
 
@@ -38,5 +40,11 @@ router_ad.post('/route/remove-stop-from-route',remove_stop_from_route);
 router_ad.get('/route',get_routes);
 
 
+
+//complaint api
+
+router_ad.get('/complaint',getAllComplaints)
+router_ad.post('/complaint/update-status',Change_Complaint_Status)
+router_ad.post('/complaint/delete',deleteComplaint)
 
 module.exports={router_ad}

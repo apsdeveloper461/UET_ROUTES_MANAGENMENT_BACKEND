@@ -37,9 +37,12 @@
         - driver : Driver(ref)
         - stops[] : Stop(ref)
 
+### Complaint Model
 
-
-
+        - registration_no : string
+        - complaint_description : string
+        - isSolved : bool (if pending then 'false' or 'true' on resolve)
+        - date : string (store custom date format and in form of string)
 
 
 
@@ -130,6 +133,24 @@ This is the backend of my project, in this project have routes:
         In request body {token, route_id,stop_id} , give you route_id in which remove stop and stop_id ref to stop table row.
 
 
+## Manage Complaint(Admin Panel):
+
+### api/admin/complaint
+
+        - GET request
+        - Give you response  with complaints array 
+
+### api/admin/complaint/update-status
+
+        - POST request
+        - In request body accept {complaint_id}
+        - Toggle the complaint is Solved or not.
+
+### api/admin/complaint/delete
+
+        - POST request 
+        - In request body accept {complaint_id}
+        - Delete The complaint.
 
 ## LogIn/Register Functionality(User Panel) :
 
@@ -175,3 +196,8 @@ This is the backend of my project, in this project have routes:
 
 
 
+### api/user/create-complaint
+
+        - POST request
+        -  in request body accept , { registration_no, complaint_description }
+        - Response if save other-wise give error

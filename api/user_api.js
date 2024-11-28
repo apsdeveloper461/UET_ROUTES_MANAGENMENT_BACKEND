@@ -6,6 +6,7 @@ const { getDataOfUser } = require('../controller/user/getData.js');
 const { register } = require('../controller/user/register.js');
 const { logIn } = require('../controller/user/logIn.js');
 const { forgetPassword, VerifyForgetPassword } = require('../controller/user/forgetPassword.js');
+const { createComplaint } = require("../controller/user/create-complaint.js");
 
 
 
@@ -16,6 +17,7 @@ router.post("/forget-password",forgetPassword);
 router.post("/forget-password/verify/:token",VerifyForgetPassword);
 router.get("/verify/:token",verifyEmail);
 router.get("/",getDataOfUser);
+router.post("/create-complaint",createComplaint)
 
 
 
