@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors=require('cors')
 const app = express();
 
 // get connection function
@@ -8,6 +9,12 @@ const DBConnection = require("./controller/Database/DBconnection");
 const { router } = require("./api/user_api");
 const { router_ad } = require("./api/admin_api");
 
+// apply cors options 
+const corsOptions = {
+  origin: 'http://localhost:5173', // Replace with your frontend's origin
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions))
 app.use(express.json());
 app.use("/api/user", router);
 app.use('/api/admin',router_ad);
