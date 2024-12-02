@@ -176,10 +176,10 @@ This is the backend of my project, in this project have routes:
        - In request.params { token }
        - This will response you object as {token:"" , data:{username, id, email} }
 
-### api/user/
+### api/user/:token
 
         - GET request 
-        - In request.body contains { token }
+        - In request.params contains { token }
         - This will response you object as {token:"" , data:{username, id, email} }
 
 ### api/user/forget-password

@@ -25,7 +25,7 @@ const ComplaintSchema = new mongoose.Schema({
     }
 })
 
-const  ComplaintModel=selectedDb.model('Complaint',ComplaintSchema);
+const  ComplaintModel=selectedDb.model('uet_complaints',ComplaintSchema);
 
 
 module.exports={ComplaintModel}

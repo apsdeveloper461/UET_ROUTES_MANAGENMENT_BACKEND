@@ -40,7 +40,7 @@ const logIn=async(req,res)=>{
 
 
             res.status(200).json({
-                msg:"hello ! this is logIn page",
+                msg:"Successfully logIn ",
                 success:true,
                 token,
                 data:{

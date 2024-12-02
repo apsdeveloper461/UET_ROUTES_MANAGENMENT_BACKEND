@@ -16,7 +16,7 @@ router.post("/login",logIn);
 router.post("/forget-password",forgetPassword);
 router.post("/forget-password/verify/:token",VerifyForgetPassword);
 router.get("/verify/:token",verifyEmail);
-router.get("/",getDataOfUser);
+router.get("/:token",getDataOfUser);
 router.post("/create-complaint",createComplaint)
 
 
