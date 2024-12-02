@@ -9,6 +9,8 @@
         - email : string
         - password : string
         - isVerified : bool
+        - phone_no:string
+        - address:string
 
 ### Admin Model
 
@@ -157,7 +159,7 @@ This is the backend of my project, in this project have routes:
 ### api/user/login 
 
        -  POST request
-       - In request.body contains { eamil, password }
+       - In request.body contains { eamil, password,phone_no,address }
        - If the user is not verified , then send back {msg:"check email for verifcation"}
        - This will response you object as {token:"" , data:{username, id, email} }
 

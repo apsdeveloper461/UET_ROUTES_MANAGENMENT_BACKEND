@@ -20,15 +20,16 @@ const getDataOfUser=async(req,res)=>{
             })
         }else{
             const {id}=decodeToken(token);
-            const user_data=await UserModel.findById(id);
-
+            const user_data=await UserModel.findById(id).select("-password -isVerified -__v");
+            if(!user_data){
+                return res.status(404).json({
+                    msg:"user not found",
+                    success:false
+                })
+            }
             return res.status(200).json({
                 msg:"data fetched successfully",
-                data:{
-                    id:user_data._id,
-                    username:user_data.username,
-                    email:user_data.email
-                },
+                data:user_data,
                 success:true
             })
         }

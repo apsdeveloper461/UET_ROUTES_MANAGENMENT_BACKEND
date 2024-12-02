@@ -4,9 +4,9 @@ const { generateToken } = require('../jwt-token.js');
 const sendEmailWithLink = require('../send-email.js');
 const register=async(req,res)=>{
     try{
-     const {name,email,password}=req.body;
+     const {name,email,password,phone_no,address}=req.body;
     //  console.log(name,email,password);
-    if(email&&password&&name){
+    if(email&&password&&name&&phone_no&&address){
         const IsUserExist=await UserModel.findOne({email:email});
         if(IsUserExist){
             return res.status(400).json({
@@ -17,7 +17,9 @@ const register=async(req,res)=>{
         const user=await UserModel.create({
             username:name,
             email:email,
-            password:password
+            password:password,
+            phone_no:phone_no,  
+            address:address
         })
 
         const token=generateToken(user._id,"24h");

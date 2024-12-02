@@ -4,6 +4,8 @@ const selectedDb = mongoose.connection.useDb('UET_SYSTEM');
 const UserSchema=new mongoose.Schema({
     username:{type:String,required:true},
     email:{type:String,required:true,unique:true},
+    phone_no:{type:String,required:true},
+    address:{type:String,required:true},
     password:{type:String,required:true},
     isVerified:{type:Boolean,default:false},
 })
