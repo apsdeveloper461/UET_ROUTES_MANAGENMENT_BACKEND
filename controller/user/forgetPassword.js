@@ -15,8 +15,8 @@ const forgetPassword = async (req, res) => {
         if(!user){
             throw new Error("User not found");
         }
-        const token = generateToken(user._id, "1h");
-        await sendEmailWithLink(user.email,"Forget Password of UET Routes Management System", `${process.env.NODE_FRONTEND_URL}/user/auth/forget/verify/${token}`);
+        const token = generateToken(user._id, "30m");
+        await sendEmailWithLink(user.email,"Forget Password of UET Routes Management System validate for 30 minutes", `${process.env.NODE_FRONTEND_URL}/user/auth/forget/verify/${token}`);
         res.status(200).json({
             msg: "Verification Code sent to your email",
             success: true
@@ -42,6 +42,8 @@ const VerifyForgetPassword=async(req,res)=>{
     try {
         const {token}=req.params;
         const {password}=req.body;
+        console.log(token.password);
+        
     
         if(!token && !password){
             throw new Error("Token & password not found");
@@ -63,7 +65,7 @@ const VerifyForgetPassword=async(req,res)=>{
         // console.log(id);
         // const user=await userModel
         res.status(200).json({
-            msg:"Password changed successfully",
+            msg:"Password changed successfully,Going To login Page ",
             success:true
         })
         
