@@ -170,6 +170,12 @@ This is the backend of my project, in this project have routes:
         - This will send object which show "check email for verifcattion"
         e,g  {msg:"check email for verifcation"}
 
+### api/user/edit-profile/:token
+
+        - POST request
+        - IN request params {token}
+        - In request.body contains { name, phone_no, address }
+
 ### api/user/verify/:token
 
        - GET request 
