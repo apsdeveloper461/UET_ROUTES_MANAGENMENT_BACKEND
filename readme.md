@@ -59,10 +59,11 @@ This is the backend of my project, in this project have routes:
         - In request body accept {email,password}
         - give {token} for setting to get data of user at anytiem in application
 
-### api/admin/
+### api/admin/_t/:token
 
-        - GET request
-        - give back data in object as {date:{}}
+        - GET request 
+        - In request.params contains { token }
+        - This will response you object as {token:"" , data:{username, id, email} }
  
 ### api/admin/change-password
 

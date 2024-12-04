@@ -7,7 +7,7 @@ const { add_stop, update_stop, get_all_stops } = require("../controller/admin/st
 const { add_driver, update_driver, get_all_drivers } = require("../controller/admin/driver_handler");
 const { add_route, get_routes, add_stop_to_route, remove_stop_from_route, update_route } = require("../controller/admin/routes_handler");
 const { Change_Complaint_Status, getAllComplaints, deleteComplaint } = require("../controller/admin/complaint_handler");
-const { router } = require("./user_api");
+
 const router_ad=express.Router();
 
 
@@ -15,7 +15,8 @@ const router_ad=express.Router();
 
 router_ad.post('/login',logIn_ad);
 router_ad.post('/register',register_ad)
-router_ad.get('/',getDataOfAdmin);
+router_ad.get('/_t/:token',getDataOfAdmin);
+// router_ad.post('/:token',getDataOfAdmin);
 router_ad.post('/change-password',changePassword_ad)
 
 
@@ -39,7 +40,7 @@ router_ad.post('/route/add-stop-to-route',add_stop_to_route);
 router_ad.post('/route/remove-stop-from-route',remove_stop_from_route);
 router_ad.get('/route',get_routes);
 
-
+// getAllComplaints()
 
 //complaint api
 

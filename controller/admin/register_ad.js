@@ -1,5 +1,6 @@
 const {AdminModel}=require("../../models/Admin.js");
 const register_ad=async(req,res)=>{
+    // console.log("I lregisterin");
     try{
      const {name,email,password}=req.body;
     //  console.log(name,email,password);

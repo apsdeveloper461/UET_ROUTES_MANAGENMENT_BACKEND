@@ -3,8 +3,9 @@ const { decodeToken, verifyToken } = require("../jwt-token");
 
 
 const getDataOfAdmin=async(req,res)=>{
+    // console.log("I getdata");
     try {
-        const {token}=req.body;
+        const {token}=req.params;
         if(!token){
             return res.status(400).json({
                 msg:"token not found",

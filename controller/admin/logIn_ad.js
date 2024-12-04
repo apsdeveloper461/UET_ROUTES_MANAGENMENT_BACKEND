@@ -2,6 +2,8 @@ const {AdminModel}=require('../../models/Admin')
 const { generateToken } = require("../jwt-token.js");
 
 const logIn_ad=async(req,res)=>{
+    // console.log("I login");
+    
     try {
         const {email,password}=req.body;    
         if(email&&password){

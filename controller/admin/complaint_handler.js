@@ -2,7 +2,7 @@ const { ComplaintModel } = require("../../models/Complaint");
 
 const Change_Complaint_Status = async (req, res) => {
     try {
-        const { token,complaint_id } = req.body;
+        const { complaint_id } = req.body;
         if (complaint_id) {
             const complaint = await ComplaintModel.findOne({ _id: complaint_id });
             if (complaint) {
@@ -10,7 +10,7 @@ const Change_Complaint_Status = async (req, res) => {
                 await complaint.save();
                 res.status(200).json({
                     msg: "complaint status updated",
-                    complaint: complaint,
+                    data: complaint,
                     success: true
                 })
             }
@@ -38,14 +38,20 @@ const Change_Complaint_Status = async (req, res) => {
 
 
 const getAllComplaints = async (req, res) => {
+    // console.log("here");
+    
     try {
         const complaints = await ComplaintModel.find();
+
+        console.log(complaints);
+        
         res.status(200).json({
             complaints: complaints,
             success: true
         })
     }
     catch (error) {
+        console.log(error);
         res.status(500).json({
             msg: error?.message || error,
             success: false
