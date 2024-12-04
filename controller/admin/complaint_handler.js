@@ -38,8 +38,14 @@ const Change_Complaint_Status = async (req, res) => {
 
 
 const getAllComplaints = async (req, res) => {
+    console.log("here");
+    
     try {
+    console.log("here in try");
+
         const complaints = await ComplaintModel.find();
+        console.log(complaints);
+        
         res.status(200).json({
             complaints: complaints,
             success: true
