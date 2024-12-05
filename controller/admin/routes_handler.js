@@ -7,14 +7,8 @@ const { verifyToken } = require("../jwt-token");
 
 const add_route=async(req,res)=>{
     try {
-        const {token, route_no,vehicle_no,driver_id} = req.body;
-        if(!token){
-            return res.status(400).json({msg:"Token not found", success:false});
-        }
-        const isValidToken=verifyToken(token);
-        if(!isValidToken){
-            return res.status(400).json({msg:"Token not valid", success:false});
-        }   
+        const { route_no,vehicle_no,driver_id} = req.body;
+       
         if(!route_no|| !vehicle_no || !driver_id){
             return res.status(400).json({msg:"Please fill all fields", success:false});
         }
@@ -54,14 +48,8 @@ const add_route=async(req,res)=>{
 
 const update_route=async(req,res)=>{    
     try {
-        const {token, route_id,route_no,vehicle_no,driver_id} = req.body;
-        if(!token){
-            return res.status(400).json({msg:"Token not found", success:false});
-        }
-        const isValidToken=verifyToken(token);
-        if(!isValidToken){
-            return res.status(400).json({msg:"Token not valid", success:false});
-        }
+        const { route_id,route_no,vehicle_no,driver_id} = req.body;
+      
         if(!route_id || !route_no || !driver_id){
             return res.status(400).json({msg:"Please fill all fields", success:false});
         }
@@ -175,14 +163,7 @@ const add_stop_to_route=async(req,res)=>{
 
 const get_routes=async(req,res)=>{
     try {
-        const {token} = req.body;
-        if(!token){
-            return res.status(400).json({msg:"Token not found", success:false});
-        }
-        const isValidToken=verifyToken(token);
-        if(!isValidToken){
-            return res.status(400).json({msg:"Token not valid", success:false});
-        }   
+      
         const routes = await RouteModel.aggregate([
             {
               $lookup: {

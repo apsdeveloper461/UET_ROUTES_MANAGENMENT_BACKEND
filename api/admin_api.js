@@ -3,7 +3,7 @@ const { logIn_ad } = require("../controller/admin/logIn_ad");
 const { changePassword_ad } = require("../controller/admin/changePassword_ad");
 const { getDataOfAdmin } = require("../controller/admin/getData_ad");
 const { register_ad } = require("../controller/admin/register_ad");
-const { add_stop, update_stop, get_all_stops } = require("../controller/admin/stops_handler");
+const { add_stop, update_stop, get_all_stops, delete_stop } = require("../controller/admin/stops_handler");
 const { add_driver, update_driver, get_all_drivers } = require("../controller/admin/driver_handler");
 const { add_route, get_routes, add_stop_to_route, remove_stop_from_route, update_route } = require("../controller/admin/routes_handler");
 const { Change_Complaint_Status, getAllComplaints, deleteComplaint } = require("../controller/admin/complaint_handler");
@@ -24,6 +24,7 @@ router_ad.post('/change-password',changePassword_ad)
 router_ad.post('/stop/add-stop',add_stop);
 router_ad.post('/stop/update-stop',update_stop);
 router_ad.get('/stop',get_all_stops);
+router_ad.post('/stop/delete',delete_stop);
 
 
 //driver api

@@ -3,18 +3,11 @@ const { verifyToken } = require("../jwt-token");
 
 const add_stop = async (req, res) => {
     try {
-        const { token, name, latitude,longitude } = req.body;
+        const {  name, latitude,longitude } = req.body;
         if (!name || !latitude || !longitude) {
             return res.status(400).json({ msg: "Please fill all fields", success: false });
         }
-        if (!token) {
-            return res.status(400).json({ msg: "Token not found", success: false });
-        }
-        const isValidToken = verifyToken(token);
-        if (!isValidToken) {
-            return res.status(400).json({ msg: "Token not valid", success: false });
-        }
-        // Check if name, location, or city already exists
+      
         const existingStop = await StopModel.findOne({name});
         if (existingStop) {
             return res.status(400).json({ msg: "Stop with this name and already exists", success: false });
@@ -36,18 +29,13 @@ const add_stop = async (req, res) => {
 
 const update_stop = async (req, res) => {
     try {
-        const { token, stop_id, name, latitude,longitude } = req.body;
+        const {  stop_id, name, latitude,longitude } = req.body;
 
-        if (!token) {
-            return res.status(400).json({ msg: "Token not found", success: false });
-        }
+        
         if (!stop_id || !name || !latitude || !longitude) {
             return res.status(400).json({ msg: "Please fill all fields", success: false });
         }
-        const isValidToken = verifyToken(token);
-        if (!isValidToken) {
-            return res.status(400).json({ msg: "Token not valid", success: false });
-        }
+       
         const existingStop = await StopModel.findById(stop_id);
         if (!existingStop) {
             return res.status(400).json({ msg: "Stop not found", success: false });
@@ -77,4 +65,23 @@ const get_all_stops = async (req, res) => {
     }
 }
 
-module.exports = { add_stop, update_stop, get_all_stops }
+
+const delete_stop = async (req, res) => {
+    try {
+        const { stop_id } = req.body;
+        if (!stop_id) {
+            return res.status(400).json({ msg: "Please provide stop id", success: false });
+        }
+        const stop = await StopModel.findById(stop_id);
+        if (!stop) {
+            return res.status(400).json({ msg: "Stop not found", success: false });
+        }
+        await StopModel.findByIdAndDelete(stop_id);
+        return res.status(200).json({ msg: "Stop deleted successfully", success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ msg: error.message || "Internal Server Error", success: false });
+    }
+}
+
+module.exports = { add_stop, update_stop, get_all_stops, delete_stop };
