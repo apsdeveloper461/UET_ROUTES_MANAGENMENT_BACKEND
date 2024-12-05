@@ -22,7 +22,6 @@
 
         - name : string
         - email : string
-        - password : string
         - phone : string
         - cnic : string
         - address : string
@@ -76,12 +75,12 @@ This is the backend of my project, in this project have routes:
 ### api/admin/driver/add-driver
 
         - POST request
-        - in body accept { token, name, email, password, phone, cnic, address }  , token is verify the token provided by admin is valid or not.
+        - in body accept {  name, email, phone, cnic, address }  , token is verify the token provided by admin is valid or not.
 
 ### api/admin/driver/update-driver
 
         - POST request
-        - in body accept { token, driver_id, name, email, password, phone, cnic, address },
+        - in body accept {  driver_id, name, email, phone, cnic, address },
         according to driver_id change every thing in database.
 
 ###  api/admin/driver
