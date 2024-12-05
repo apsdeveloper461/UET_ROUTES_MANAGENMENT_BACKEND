@@ -25,6 +25,7 @@
         - phone : string
         - cnic : string
         - address : string
+        - isAvailable : bool
 
 ### Stop Model
 
@@ -99,12 +100,12 @@ This is the backend of my project, in this project have routes:
 ### api/admin/stop/add-stop
 
         - POST request
-        - in request body { token, name, latitude,longitude } , token for admin is valid or not
+        - in request body {  name, latitude,longitude } , token for admin is valid or not
 
 ### api/admin/stop/update-stop
 
         - POST request
-        -  in request body  { token, stop_id, name, latitude,longitude } , acccording to stop_id update all stop details.
+        -  in request body  {  stop_id, name, latitude,longitude } , acccording to stop_id update all stop details.
 
 
 ## Manage Routes(Admin Panel):
@@ -112,28 +113,23 @@ This is the backend of my project, in this project have routes:
 ### api/admin/route/add-route
 
         - POST request
-        - In body request {{token, route_no,vehicle_no,driver_id}} , driver_id ref to driver table in databse.
+        - In body request { route_no,vehicle_no,driver_id} , driver_id ref to driver table in databse.
 
 ### api/admin/route/update-route
 
         - POST request
-        - In body accept  {token, route_id,route_no,vehicle_no,driver_id} 
+        - In body accept  { route_id,route_no,vehicle_no,driver_id} 
 
 ### api/admin/route
 
         - GET request
         - give me all routes details with full data of drivers and stops.
 
-### api/admin/route/add-stop-to-route
+### api/admin/route/delete
 
+        
         - POST request
-        - In request body {token, route_id,stop_id} , give you route_id in which add stop and stop_id ref to stop table row.
-
-### api/admin/route/remove-stop-from-route
-
-        POST request
-        In request body {token, route_id,stop_id} , give you route_id in which remove stop and stop_id ref to stop table row.
-
+        - In body accept  {route_id} 
 
 ## Manage Complaint(Admin Panel):
 
