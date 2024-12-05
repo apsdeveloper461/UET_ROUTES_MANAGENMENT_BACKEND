@@ -44,7 +44,7 @@ const getAllComplaints = async (req, res) => {
     console.log("here in try");
 
         const complaints = await ComplaintModel.find();
-        // console.log(complaints);
+        console.log(complaints);
         
         res.status(200).json({
             complaints: complaints,

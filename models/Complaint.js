@@ -1,31 +1,27 @@
-const mongoose = require('mongoose');
-const { generatedate } = require('../controller/generate-date');
+const mongoose = require("mongoose");
 
+const selectedDb = mongoose.connection.useDb("UET_SYSTEM");
 
-const selectedDb=mongoose.connection.useDb("UET_SYSTEM");
-
-
-
-const ComplaintSchema = new mongoose.Schema({
-    registration_no:{
-        type:String,
-        required:true
+const ComplaintSchema = new mongoose.Schema(
+  {
+    registration_no: {
+      type: String,
+      required: true,
     },
-    complaint_description:{
-        type:String,
-        required:true
+    complaint_description: {
+      type: String,
+      required: true,
     },
-    isSolved:{
-        type:Boolean,
-        default:false
-    },
-    date:{
-        type:String,
-        default:generatedate()
+    isSolved: {
+      type: Boolean,
+      default: false,
     }
-})
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const  ComplaintModel=selectedDb.model('uet_complaints',ComplaintSchema);
+const ComplaintModel = selectedDb.model("uet_complaints", ComplaintSchema);
 
-
-module.exports={ComplaintModel}
+module.exports = { ComplaintModel };
