@@ -29,6 +29,8 @@ const add_route=async(req,res)=>{
         if(!existdriver){
             return res.status(400).json({ msg: "Driver not found", success: false });
         }
+        existdriver.isAvailable=false;
+        await existdriver.save();
 
         const route_data = new RouteModel({
             route_no,
@@ -73,6 +75,8 @@ const update_route=async(req,res)=>{
         if(!existdriver){
             return res.status(400).json({ msg: "Driver not found", success: false });
         }
+        existdriver.isAvailable=false;
+        await existdriver.save();
         //update the route
         await RouteModel.findByIdAndUpdate(route_id, {
             route_no,

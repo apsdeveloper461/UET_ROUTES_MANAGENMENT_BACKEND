@@ -4,7 +4,7 @@ const { changePassword_ad } = require("../controller/admin/changePassword_ad");
 const { getDataOfAdmin } = require("../controller/admin/getData_ad");
 const { register_ad } = require("../controller/admin/register_ad");
 const { add_stop, update_stop, get_all_stops, delete_stop } = require("../controller/admin/stops_handler");
-const { add_driver, update_driver, get_all_drivers } = require("../controller/admin/driver_handler");
+const { add_driver, update_driver, get_all_drivers, driver_not_assign_to_route } = require("../controller/admin/driver_handler");
 const { add_route, get_routes, add_stop_to_route, remove_stop_from_route, update_route } = require("../controller/admin/routes_handler");
 const { Change_Complaint_Status, getAllComplaints, deleteComplaint } = require("../controller/admin/complaint_handler");
 
@@ -31,6 +31,7 @@ router_ad.post('/stop/delete',delete_stop);
 router_ad.post('/driver/add-driver',add_driver);
 router_ad.post('/driver/update-driver',update_driver);
 router_ad.get('/driver',get_all_drivers);
+router_ad.get('/driver/isAvailable',driver_not_assign_to_route);
 
 
 //routes api

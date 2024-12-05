@@ -116,4 +116,20 @@ const get_all_drivers = async (req, res) => {
     });
   }
 };
-module.exports = { add_driver, update_driver, get_all_drivers };
+
+const driver_not_assign_to_route = async (req, res) => {
+    try {
+        const driver_data = await DriverModel.find({ isAvailable: true });
+        return res.status(200).json({
+        msg: "data fetched successfully",
+        data: driver_data,
+        success: true,
+        });
+    } catch (error) {
+        res.status(500).json({
+        msg: error?.message || error,
+        success: false,
+        });
+    }
+    }
+module.exports = { add_driver, update_driver, get_all_drivers ,driver_not_assign_to_route};
