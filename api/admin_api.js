@@ -5,7 +5,7 @@ const { getDataOfAdmin } = require("../controller/admin/getData_ad");
 const { register_ad } = require("../controller/admin/register_ad");
 const { add_stop, update_stop, get_all_stops, delete_stop } = require("../controller/admin/stops_handler");
 const { add_driver, update_driver, get_all_drivers, driver_not_assign_to_route } = require("../controller/admin/driver_handler");
-const { add_route, get_routes, add_stop_to_route, remove_stop_from_route, update_route } = require("../controller/admin/routes_handler");
+const { add_route, get_routes, update_route, delelte_route } = require("../controller/admin/routes_handler");
 const { Change_Complaint_Status, getAllComplaints, deleteComplaint } = require("../controller/admin/complaint_handler");
 
 const router_ad=express.Router();
@@ -38,9 +38,8 @@ router_ad.get('/driver/isAvailable',driver_not_assign_to_route);
 
 router_ad.post('/route/add-route',add_route);
 router_ad.post('/route/update-route',update_route);
-router_ad.post('/route/add-stop-to-route',add_stop_to_route);
-router_ad.post('/route/remove-stop-from-route',remove_stop_from_route);
 router_ad.get('/route',get_routes);
+router_ad.post('/route/delete',delelte_route);
 
 // getAllComplaints()
 
