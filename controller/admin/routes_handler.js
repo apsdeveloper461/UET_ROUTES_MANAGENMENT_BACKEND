@@ -140,6 +140,7 @@ const get_routes=async(req,res)=>{
                     driver: {
                         value: '$driverDetails._id',
                         label: '$driverDetails.name',
+                        phone:`$driverDetails.phone`
                     },
                     stops: {
                         $map: {
