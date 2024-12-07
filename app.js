@@ -8,6 +8,7 @@ const DBConnection = require("./controller/Database/DBconnection");
 
 const { router } = require("./api/user_api");
 const { router_ad } = require("./api/admin_api");
+const { router_dr } = require("./api/driver_api");
 
 // apply cors options 
 const corsOptions = {
@@ -18,6 +19,7 @@ app.use(cors(corsOptions))
 app.use(express.json());
 app.use("/api/user", router);
 app.use('/api/admin',router_ad);
+app.use('/api/driver',router_dr);
 
 // Define routes
 app.get("/", (req, res) => {
