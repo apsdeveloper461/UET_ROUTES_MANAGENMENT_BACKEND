@@ -1,8 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const cors=require('cors')
+const http=require('http')
+const {setupSockets}=require('./socket')
 const app = express();
-
+const server=http.createServer(app)
 // get connection function
 const DBConnection = require("./controller/Database/DBconnection");
 
@@ -12,7 +14,7 @@ const { router_dr } = require("./api/driver_api");
 
 // apply cors options 
 const corsOptions = {
-  origin: 'http://localhost:5173', // Replace with your frontend's origin
+  origin: process.env.NODE_FRONTEND_URL,// Replace with your frontend's origin
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions))
@@ -26,9 +28,13 @@ app.get("/", (req, res) => {
   res.send("Home | Mehboob Alam");
 });
 
+// Setup socket connections
+setupSockets(server);
+
+
 DBConnection()
   .then(() => {
-    app.listen(1096, () => {
+    server.listen(1096, () => {
       console.log("server is running on port 1096");
     });
   })
