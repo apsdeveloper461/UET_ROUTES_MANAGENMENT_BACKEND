@@ -14,7 +14,7 @@ const { router_dr } = require("./api/driver_api");
 
 // apply cors options 
 const corsOptions = {
-  origin: process.env.NODE_FRONTEND_URL,// Replace with your frontend's origin
+  origin:'*',// Replace with your frontend's origin
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions))
