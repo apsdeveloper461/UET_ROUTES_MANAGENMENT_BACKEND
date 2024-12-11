@@ -13,8 +13,6 @@ const UserSchema=new mongoose.Schema({
 
 //pre condition on save the data
 UserSchema.pre('save',async function(next){
-    // console.log("pre save");
-    // if password is not modify , then got to next 
     if(!this.isModified("password")){
         return next();
     }
@@ -27,8 +25,6 @@ UserSchema.pre('save',async function(next){
 
 
 UserSchema.methods.matchPassword=async function(enteredPassword){
-    // console.log(this.password);
-    
     if(!enteredPassword){
         throw new Error("password not found");
         
