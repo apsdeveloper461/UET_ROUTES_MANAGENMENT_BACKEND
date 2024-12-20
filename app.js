@@ -11,6 +11,19 @@ const { decodeToken } = require("./controller/jwt-token");
 const { DriverModel } = require("./models/Driver");
 const { RouteModel } = require("./models/Route");
 const pusher = require("./pusher");
+const http = require("http");
+const { Server } = require("socket.io");
+const chatHandler = require("./chatHandler");
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Replace with your frontend's origin
+    methods: ["GET", "POST"],
+  },
+});
+
+chatHandler(io);
 
 // apply cors options
 const corsOptions = {
@@ -105,7 +118,7 @@ app.get("/api/routes-by-stop/:stop_id", async (req, res) => {
 
 DBConnection()
   .then(() => {
-    app.listen(1096, () => {
+    server.listen(1096, () => {
       console.log("server is running on port 1096");
     });
   })
