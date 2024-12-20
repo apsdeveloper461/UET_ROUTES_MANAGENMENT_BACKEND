@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const selectedDb = mongoose.connection.useDb('UET_SYSTEM');
+const selectedDb = mongoose.connection.useDb('CN');
 
 const StopSchema = new mongoose.Schema({
     name: { type: String, required: true },

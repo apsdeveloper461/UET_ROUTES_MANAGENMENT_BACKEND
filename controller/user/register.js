@@ -7,7 +7,7 @@ const register = async (req, res) => {
     console.log(req.body);
     
     const { name, email, password, phone_no, address } = req.body;
-    //  console.log(name,email,password);
+     console.log(name,email,password);
     if (email && password && name && phone_no && address) {
         console.log("inside if");
         

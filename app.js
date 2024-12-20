@@ -14,6 +14,7 @@ const pusher = require("./pusher");
 const http = require("http");
 const { Server } = require("socket.io");
 const chatHandler = require("./chatHandler");
+const { UserModel } = require("./models/User");
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -36,6 +37,20 @@ app.use("/api/user", router);
 app.use("/api/admin", router_ad);
 app.use("/api/driver", router_dr);
 
+app.get("/get/users-drivers",async(req,res)=>{
+  try { 
+    console.log("here");
+    
+      const users=await UserModel.find();
+      const drivers=await DriverModel.find();
+      res.status(200).json({data:{users,drivers},success:true})
+  } catch (error) { 
+    console.log("Heere",error);
+    
+      res.status(500).json({msg:"Internal server error",success:false})
+  }
+
+})
 // Define routes
 app.get("/", (req, res) => {
   res.send("Home | Mehboob Alam");
@@ -118,8 +133,8 @@ app.get("/api/routes-by-stop/:stop_id", async (req, res) => {
 
 DBConnection()
   .then(() => {
-    server.listen(1096, () => {
-      console.log("server is running on port 1096");
+    server.listen(30781, () => {
+      console.log("server is running on port 30781");
     });
   })
   .catch((error) => {
