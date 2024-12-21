@@ -3,8 +3,6 @@ const userSocketMap = {};
 
 module.exports = (io) => {
   io.on("connection", (socket) => {
-    // console.log("a user connected", userSocketMap);
-
     socket.on("register", (userId) => {
       userSocketMap[userId] = socket.id;
     });   
@@ -12,9 +10,7 @@ module.exports = (io) => {
     socket.on("sync-chat", async (msg) => {
       const { sender, receiver } = msg;
       try {
-        const chat = await ChatModel.syncChat(sender, receiver);
-        // console.log("sync-chat", chat);
-        
+        const chat = await ChatModel.syncChats(sender, receiver);
         socket.emit("sync-chat", chat);
       } catch (error) {
         console.log("Error handling sync chat:", error);
@@ -23,13 +19,11 @@ module.exports = (io) => {
 
     socket.on("chat-message", async (msg) => {
       const { sender, senderModel, receiver, receiverModel, content } = msg;
-      // console.log(msg);
       
       try {
         const chat = await ChatModel.findOrCreateChat(sender, senderModel, receiver, receiverModel, content);
         const receiverSocketId = userSocketMap[receiver];
         const senderSocketId = userSocketMap[sender];
-        // console.log("receiverSocketId", chat);
         if (receiverSocketId) {
           io.to(receiverSocketId).emit("chat-message", chat);
         } if (senderSocketId) {
@@ -40,13 +34,20 @@ module.exports = (io) => {
       }
     });
 
+    socket.on("mark-as-read", async (msg) => {
+      const { chatId, userId } = msg;
+      try {
+        await ChatModel.markMessagesAsRead(chatId, userId);
+        const chat = await ChatModel.syncChat(chatId);
+        socket.emit("sync-chat", chat);
+      } catch (error) {
+        console.log("Error handling mark as read:", error);
+      }
+    });
+
     socket.on("get-all-chats", async (userId) => {
       try {
-        // console.log("get-all-chats", userId);
-        
         const chats = await ChatModel.getAllChatsForUser(userId);
-        console.log("chats", chats);
-        
         socket.emit("all-chats", chats);
       } catch (error) {
         console.log("Error retrieving all chats:", error);
@@ -64,3 +65,8 @@ module.exports = (io) => {
     });
   });
 };
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+});

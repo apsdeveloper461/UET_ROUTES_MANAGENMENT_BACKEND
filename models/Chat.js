@@ -52,13 +52,31 @@ chatSchema.statics.findOrCreateChat = async function(sender, senderModel, receiv
     return populatedChat[0];
 };
 
-chatSchema.statics.syncChat = async function(sender, receiver) {
-    const chat = await this.findOne({ 
+chatSchema.statics.syncChat = async function(chatId) {
+    const chat = await this.findById(chatId)
+    
+    const populatedChat = await this.aggregate([
+        { $match: { _id: chat._id } },
+        {
+            $lookup: {
+                from: 'uet_messages',
+                localField: 'messages',
+                foreignField: '_id',
+                as: 'messages'
+            }
+        }
+    ]).exec();
+
+    return populatedChat[0];
+};
+chatSchema.statics.syncChats = async function(sender,receiver) {
+    const chat = await this.findOne({
         $or: [
             { sender, receiver },
             { sender: receiver, receiver: sender }
         ]
-    })
+    });
+    
     const populatedChat = await this.aggregate([
         { $match: { _id: chat._id } },
         {
@@ -95,7 +113,7 @@ chatSchema.statics.getAllChatsForUser = async function(userId) {
         {
             $addFields: {
                 messages: { $sortArray: { input: '$messages', sortBy: { createdAt: -1 } } }, // Sort messages by createdAt in descending order
-                lastMessage: { $arrayElemAt: ['$messages', 0] }, // Get the first element after sorting
+                lastMessage: { $arrayElemAt: ['$messages',0] }, // Get the first element after sorting
                 unreadMessagesCount: {
                     $size: {
                         $filter: {
@@ -143,7 +161,8 @@ chatSchema.statics.getAllChatsForUser = async function(userId) {
         },
         {
             $addFields: {
-                'otherMember.username': '$otherMemberInfo.username'
+                'otherMember.username': '$otherMemberInfo.username',
+                'otherMember.email': '$otherMemberInfo.email'
             }
         },
         {
@@ -155,7 +174,35 @@ chatSchema.statics.getAllChatsForUser = async function(userId) {
             }
         }
     ]);
+
+    
     return chats;
+};
+
+chatSchema.statics.markMessagesAsRead = async function(chatId, userId) {
+    const chats = await this.findById(chatId)
+    const populatedChat = await this.aggregate([
+        { $match: { _id: chats._id } },
+        {
+            $lookup: {
+                from: 'uet_messages',
+                localField: 'messages',
+                foreignField: '_id',
+                as: 'messages'
+            }
+        }
+    ]).exec();
+
+    const chat=populatedChat[0];
+    
+    if (chat) {
+        for (let message of chat.messages) {
+            if (message.sender.toString() !== userId.toString() && !message.isread) {
+                message.isread = true;
+                await MessageModel.findByIdAndUpdate(message._id, { isread: true });
+            }
+        }
+    }
 };
 
 exports.ChatModel = selectedDb.model('uet_chats', chatSchema);
