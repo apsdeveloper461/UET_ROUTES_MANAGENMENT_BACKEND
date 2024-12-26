@@ -52,15 +52,6 @@ router_dr.get("/_d/:token",async(req,res)=>{
     }
 })
 
-// router_dr.get("/_d",async(req,res)=>{
-//     try {
-
-//         const drivers=await DriverModel.find();
-//         res.status(200).json({msg:"All Drivers",data:drivers,success:true});
-//     } catch (error) {
-//         res.status(500).json({msg:"Internal Server Error",success:false});
-//     }
-// })
 
 
 
