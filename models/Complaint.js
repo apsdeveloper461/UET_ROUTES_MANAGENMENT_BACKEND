@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const selectedDb = mongoose.connection.useDb("UET_SYSTEM");
+const selectedDb = mongoose.connection.useDb("CN");
 
 const ComplaintSchema = new mongoose.Schema(
   {

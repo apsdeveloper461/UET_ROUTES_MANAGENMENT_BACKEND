@@ -23,7 +23,7 @@ const add_driver = async (req, res) => {
         });
     }
     const driver_data = new DriverModel({
-      name,
+     username:name,
       email,
       phone,
       cnic,
@@ -82,7 +82,7 @@ const update_driver = async (req, res) => {
         });
     }
 
-    driver_data.name = name;
+    driver_data.username = name;
     driver_data.email = email;
     driver_data.phone = phone;
     driver_data.cnic = cnic;

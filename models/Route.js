@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-const selectedDb = mongoose.connection.useDb('UET_SYSTEM');
+const selectedDb = mongoose.connection.useDb('CN');
 
 const RouteSchema = new mongoose.Schema({
     route_no:{type:String,required:true,unique:true},

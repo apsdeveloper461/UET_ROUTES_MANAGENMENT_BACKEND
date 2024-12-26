@@ -9,11 +9,7 @@ yarn-error.log*
 node_modules/
 bower_components/
 
-# Environment variables
-.env
-.env.* # For multiple environment files like .env.local, .env.production
-
-# Build output
+# Optional npm cache directory
 dist/
 build/
 .tmp/
