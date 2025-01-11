@@ -20,7 +20,6 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*", // Replace with your frontend's origin
-    methods: ["GET", "POST"],
   },
 });
 
@@ -29,7 +28,6 @@ chatHandler(io);
 // apply cors options
 const corsOptions = {
   origin: "*", // Replace with your frontend's origin
-  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 app.use(express.json());
